@@ -1,1 +1,46 @@
 curl -X POST -H "Content-Type: application/json" --data '{"id": "tt0109830", "name": "Forrest Gump", "genre": "drama"}' http://localhost:4000/items
+
+
+const db = require("./db");
+const dbName = "data";
+const collectionName = "movies";
+ObjectId = require('mongodb').ObjectID;
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.find({_id: ObjectId('600a5b0e90e47900100e34b5')}).toArray(function (err, result) {  
+      console.log(result[0]); 
+   })   
+})
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.find({"title": "The Crown"}).toArray(function (err, result) {  
+      console.log(result[0]); 
+   })   
+})
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.insertOne({"title": "The Crown", "created_at": new Date()}, function (err, result) {  
+      console.log(result.ops)
+   })   
+})
+
+
+
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.update({_id: ObjectId('600a5b0e90e47900100e34b5')},{$push: {like_by:'dawg'}}, {upsert: true}, function (err, result) {  
+      if (err) throw err;  
+      console.log(result); 
+   })   
+})
+
+ObjectId = require('mongodb').ObjectID;
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.update({_id: ObjectId('600a5b0e90e47900100e34b5')},{$set: {likes: 13}}, {upsert: true}, function (err, result) {  
+      if (err) throw err;  
+      console.log(result); 
+   })   
+})
+
+
+
