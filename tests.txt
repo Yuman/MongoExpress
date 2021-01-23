@@ -44,3 +44,13 @@ db.initialize(dbName, collectionName, function (coll) {
 
 
 
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.update(
+   {_id: ObjectId('600a5b0e90e47900100e34b5')},
+   {$inc: {likes: 1}, $push: {likers: 'dawg'}}, 
+   {upsert: true}, 
+   function (err, result) {  
+      if (err) throw err;  
+      console.log(result); 
+   })   
+})
