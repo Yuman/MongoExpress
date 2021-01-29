@@ -2,8 +2,8 @@ curl -X POST -H "Content-Type: application/json" --data '{"id": "tt0109830", "na
 
 
 const db = require("./db");
-const dbName = "data";
-const collectionName = "movies";
+const dbName = "msgdb";
+const collectionName = "msgs";
 ObjectId = require('mongodb').ObjectID;
 
 db.initialize(dbName, collectionName, function (coll) { 
@@ -46,8 +46,31 @@ db.initialize(dbName, collectionName, function (coll) {
 
 db.initialize(dbName, collectionName, function (coll) { 
    coll.update(
-   {_id: ObjectId('600a5b0e90e47900100e34b5')},
+   {title: 'The Crown'},
    {$inc: {likes: 1}, $push: {likers: 'dawg'}}, 
+   {upsert: true}, 
+   function (err, result) {  
+      if (err) throw err;  
+      console.log(result); 
+   })   
+})
+
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.update(
+   {title: 'The Crown'},
+   {$inc: {likes: 1}, $push: {likers: 'kat'}}, 
+   {upsert: true}, 
+   function (err, result) {  
+      if (err) throw err;  
+      console.log(result); 
+   })   
+})
+
+db.initialize(dbName, collectionName, function (coll) { 
+   coll.update(
+   {title: 'The Crown'},
+   {$inc: {likes: -1}, $pull: {likers: 'kat'}}, 
    {upsert: true}, 
    function (err, result) {  
       if (err) throw err;  
